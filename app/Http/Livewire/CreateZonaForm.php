@@ -3,7 +3,7 @@
 namespace App\Http\Livewire;
 
     use Livewire\Component;
-    use App\Models\Zona; // Asegúrate de importar tu modelo Zona
+    use App\Models\Zona; 
 
     class CreateZonaForm extends Component
     {
