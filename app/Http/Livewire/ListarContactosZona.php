@@ -25,6 +25,32 @@ class ListarContactosZona extends Component
         $this->resetPage(); // Reinicia la paginación al cargar nuevos contactos
     }
 
+    /**
+     * Elimina un contacto de la base de datos.
+     *
+     * @param int $contactoId El ID del contacto a eliminar.
+     * @return void
+     */
+    public function deleteContacto($contactoId)
+    {
+        try {
+            $contacto = Contacto::findOrFail($contactoId); // Busca el contacto por su ID
+            $nombreContactoEliminado = $contacto->nombre; // Captura el nombre antes de eliminar
+            $contacto->delete(); // Elimina el contacto
+
+            // Refrescar la lista de contactos para la zona actual
+            // No necesitamos redirigir, Livewire actualizará la vista
+            $this->resetPage(); // Vuelve a la primera página de contactos (si aplica)
+            // Opcional: Re-emitir el evento para que la lista de zonas sepa que un contacto fue eliminado si fuera necesario
+            // $this->emit('contactoEliminado');
+
+            session()->flash('message', 'Contacto "' . $nombreContactoEliminado . '" eliminado exitosamente.');
+
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar el contacto: ' . $e->getMessage());
+        }
+    }
+
     public function render()
     {
         $contactos = collect(); // Inicializa la colección de contactos
