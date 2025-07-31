@@ -96,7 +96,7 @@ class EditZonaForm extends Component
                 'estado' => $this->estado,
             ]);
 
-            session()->flash('message', 'Zona actualizada exitosamente.');
+            session()->flash('message', $this->nombre . ' actualizada exitosamente.');
 
             // Redirige a la página principal de zonas después de actualizar
             return redirect()->route('dashboard');

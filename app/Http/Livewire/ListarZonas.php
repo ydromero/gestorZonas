@@ -20,6 +20,33 @@ class ListarZonas extends Component
         $this->emit('mostrarContactos', $zonaId); // Re-emite el evento para el componente ListarContactosZona
     }
 
+    /**
+     * Elimina una zona de la base de datos.
+     *
+     * @param int $zonaId El ID de la zona a eliminar.
+     * @return void
+     */
+    public function deleteZona($zonaId)
+    {
+        try {
+            $zona = Zona::findOrFail($zonaId); // Busca la zona por su ID
+            $zona->delete(); // Elimina la zona 
+
+            // Limpiar la zona seleccionada si es la que se eliminó
+            if ($this->zonaSeleccionadaId == $zonaId) {
+                $this->zonaSeleccionadaId = null;
+                $this->emit('mostrarContactos', null); // Oculta la tabla de contactos si la zona eliminada estaba seleccionada
+            }
+
+            session()->flash('message', $zona->nombre . ' eliminada exitosamente.'); // Mensaje de éxito
+            $this->gotoPage(1); // Opcional: Ir a la primera página después de eliminar
+            // $this->resetPage(); // También podrías usar esto para refrescar la paginación
+
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error al eliminar la zona: ' . $e->getMessage()); // Mensaje de error
+        }
+    }
+
     public function render()
     {
         $zonas = Zona::paginate(5); // Obtiene las zonas paginadas  

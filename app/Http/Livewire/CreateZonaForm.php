@@ -58,7 +58,7 @@ namespace App\Http\Livewire;
                 'estado' => $this->estado,
             ]);
 
-            session()->flash('message', 'Zona creada exitosamente.');
+            session()->flash('message', $this->nombre . ' creada exitosamente.');
 
             // Redirige a la página principal de zonas después de guardar
             return redirect()->route('dashboard');

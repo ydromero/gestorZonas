@@ -1,4 +1,21 @@
 <div>
+    {{-- Mensaje de éxito o error --}}
+    @if (session()->has('message'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('message') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
+    @if (session()->has('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    @endif
     <table class="table  table-hover">
         <thead class="thead-dark">
             <tr>
@@ -24,7 +41,11 @@
                     </td>
                     <td>
                         <a href="{{ route('zonas.edit', $zona->id) }}" class="btn btn-sm btn-info mr-1">Editar</a>
-                        <button class="btn btn-sm btn-danger">Eliminar</button>
+                        <button class="btn btn-sm btn-danger"
+                                onclick="confirm('¿Estás seguro de que quieres eliminar esta zona?') || event.stopImmediatePropagation()"
+                                wire:click="deleteZona({{ $zona->id }})">
+                            Eliminar
+                        </button>
                         <button wire:click="seleccionarZona({{ $zona->id }})" class="btn btn-sm btn-secondary ml-1">Ver Contactos</button>
                     </td>
                 </tr>
