@@ -9,8 +9,8 @@
                     <h2 class="h5 mb-0">Crear Nueva Zona</h2>
                 </div>
                 <div class="card-body">
-                    {{-- Componente Livewire del formulario --}}
-                    @livewire('zona-form')
+                    {{-- componente Livewire para el formulario de creación de zona --}}
+                    @livewire('create-zona-form')
                 </div>
             </div>
         </div>
